@@ -1,7 +1,4 @@
-require("dotenv").config({ path: "../config.env" });
-
-module.exports = {
-    env: {
-        BACKEND_URL = process.env.BACKEND_URL,
-    },
+const ENV = {
+    BACKEND_URL: "http://localhost:5000",
 }
+export default ENV;

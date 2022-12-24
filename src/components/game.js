@@ -1,12 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Button from 'react-bootstrap/Button';
 import StopWatch from './StopWatch/StopWatch.js';
 import SudokuBoard from './SudokuBoard.js';
-import { NavLink } from "react-router-dom";
-var sudoku = require('sudoku');
-const { forwardRef, useRef, useImperativeHandle } = React;
+import ENV from "../config.js";
+
+const { useRef } = React;
 
 export default function Game() {
+    const [userName, setUserName] = useState(0);
     useEffect(() => {
 
 
@@ -16,15 +17,37 @@ export default function Game() {
     const SudokuBoardRef = useRef();
     function StartGame() {
         console.log("Start Game!");
-        var start = StopWatchRef.current.handleStart();
-        var board = SudokuBoardRef.current.FillBoard();
+        StopWatchRef.current.handleStart();
+        SudokuBoardRef.current.FillBoard();
     }
 
     function StopGame() {
-        
-        if (SudokuBoardRef.current.CheckSolution()) {
+        var SudokuBoard = SudokuBoardRef.current.CheckSolution();
+        if (JSON.stringify(SudokuBoard) !== JSON.stringify([])) {
             console.log("Correct!");
-            console.log("Time :" + StopWatchRef.current.handleStop())
+            var time = StopWatchRef.current.handleStop()
+            console.log("Time :" + time)
+            const response = fetch(ENV.BACKEND_URL + "/highscore/add", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ "Name": userName, "Time": time, "Sudoku": SudokuBoard }),
+            })
+
+
+            response.then(
+                (value) => { 
+                    console.log("Response OK!"); 
+                    window.alert("Correct!");
+                },
+                (reason) => {
+                    const message = `An error occurred: ${reason}`;
+                    window.alert(message);
+                    console.log(message);
+                    return;
+                }
+            )
         } else {
             console.log("Wrong!");
             window.alert("Incorrect solution");
@@ -32,20 +55,20 @@ export default function Game() {
     }
 
     return (
-        <>
+        <div style={{ marginLeft: 55 }} >
             <StopWatch ref={StopWatchRef} />
 
-            <form style={{ marginLeft: 55 }} >
+            <form>
                 <label>
                     Name:
-                    <input type="text" name="username" style={{ marginLeft: 10 }} />
+                    <input type="text" onInput={e => setUserName(e.target.value)} style={{ marginLeft: 10, marginTop: 20 }} />
                 </label>
             </form>
             <br />
-            <Button variant="primary" style={{ marginLeft: 55 }} size={'lg'} onClick={() => StartGame()}>Start</Button>{''}
+            <Button variant="primary" size={'lg'} onClick={() => StartGame()}>Start</Button>{''}
             <Button variant="primary" style={{ marginLeft: 10 }} size={'lg'} onClick={() => StopGame()}>Submit</Button>{''}
             <SudokuBoard ref={SudokuBoardRef} />
-        </>
+        </div>
 
     );
 

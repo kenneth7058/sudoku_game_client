@@ -23,11 +23,17 @@ const SudokuBoard = forwardRef((props, ref) => {
 
         CheckSolution() {
             var squares = document.querySelector('#puzzle').childNodes;
+            var submission = [];
             for (let i = 0; i < squares.length; i++) {
-                puzzle[i] = squares[i].value - 1;
+                submission[i] = squares[i].value - 1;
 
             };
-            return JSON.stringify(puzzle) === JSON.stringify(solution);
+            if (JSON.stringify(puzzle) === JSON.stringify(solution)) {
+            //if (true) {
+                return puzzle;
+            } else {
+                return [];
+            };
         }
 
     }));

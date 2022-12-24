@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import "./StopWatch.css";
+
 import Timer from "../Timer/Timer";
 
-const { forwardRef, useRef, useImperativeHandle } = React;
+const { forwardRef, useImperativeHandle } = React;
 
 const StopWatch = forwardRef((props, ref) => {
     const [isActive, setIsActive] = useState(false);
