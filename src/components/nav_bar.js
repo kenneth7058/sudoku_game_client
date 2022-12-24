@@ -13,8 +13,7 @@ export default function Nav_bar() {
         <Navbar.Brand>Sudoku Puzzle</Navbar.Brand>
         <Nav className="me-auto">
           <Nav.Link href="/Game">Return to game</Nav.Link>
-          <Nav.Link href="/HighScore">Personal Record</Nav.Link>
-          <Nav.Link href="/Leaderboard">Leaderboard</Nav.Link>
+          <Nav.Link href="/HighScore">High Scores</Nav.Link>
         </Nav>
       </Container>
     </Navbar>

@@ -31,7 +31,7 @@ const StopWatch = forwardRef((props, ref) => {
         },
         handleStop() {
             setIsActive(false);
-            return false
+            return time
         }
     }));
 

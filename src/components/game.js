@@ -21,12 +21,13 @@ export default function Game() {
     }
 
     function StopGame() {
-
+        
         if (SudokuBoardRef.current.CheckSolution()) {
-            var stop = StopWatchRef.current.handleStop();
             console.log("Correct!");
+            console.log("Time :" + StopWatchRef.current.handleStop())
         } else {
             console.log("Wrong!");
+            window.alert("Incorrect solution");
         }
     }
 
