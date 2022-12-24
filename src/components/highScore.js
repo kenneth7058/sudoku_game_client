@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ENV from "../config.js";
+import Timer from "./Timer/Timer";
 
 const Record = (props) => (
   <tr>
     <td>{props.record.Name}</td>
-    <td>{props.record.Time}</td>
+    <td><Timer time={props.record.Time} /></td>
     <td>
-      <Link className="btn btn-link" to={`/sudoku/${props.record.Suduku}`}>Sudoku</Link>
+      <Link className="btn btn-link" to={`/sudoku/${props.record.Sudoku}`}>Sudoku</Link>
     </td>
   </tr>
 );
